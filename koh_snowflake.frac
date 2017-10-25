@@ -1,0 +1,11 @@
+alphabet
+F
+
+rules
+F | F++F++F
+
+axiom
+F++F++F
+
+angle
+60
