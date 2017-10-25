@@ -1,0 +1,4 @@
+#ifndef LSYSTEMVISUAL_H
+#define LSYSTEMVISUAL_H
+
+#endif // LSYSTEMVISUAL_H

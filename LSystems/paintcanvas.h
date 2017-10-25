@@ -1,0 +1,4 @@
+#ifndef PAINTCANVAS_H
+#define PAINTCANVAS_H
+
+#endif // PAINTCANVAS_H
