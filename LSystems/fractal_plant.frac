@@ -1,0 +1,13 @@
+alphabet
+F
+X
+
+rules
+X | F[−X][X]F[−X]+FX
+F | FF
+
+axiom
+X
+
+angle
+25

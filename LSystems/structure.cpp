@@ -1,4 +1,6 @@
 #include "structure.h"
+#include <QtMath>
+#include <QtWidgets>
 
 Structure::Structure() {}
 
@@ -23,7 +25,7 @@ void Structure::print() {
   qDebug() << axiom;
 }
 
-QString Structure::levelUp(int lvl) {
+void Structure::levelUp(int lvl) {
   QString src = axiom;
   QString trg;
   for (int i = 0; i < lvl; ++i) {
@@ -37,5 +39,42 @@ QString Structure::levelUp(int lvl) {
     }
     src = trg;
   }
-  return src;
+  currentState = src;
+}
+
+void Structure::buildVisualization(QPointF startingPoint, double step) {
+  visual.clear();
+  processPiece(0, startingPoint, step);
+}
+
+void Structure::initCurrentState() { currentState = axiom; }
+
+QVector<QLineF> &Structure::getVisualization() { return visual; }
+
+int Structure::processPiece(int ind, QPointF cur, double step) {
+  double curDistance = 0;
+  double curAngle = 0;
+  QPointF startingPoint(cur);
+  while (ind < currentState.size()) {
+    if (currentState[ind] == '+')
+      curAngle += angle;
+    else if (currentState[ind] == '-')
+      curAngle -= angle;
+    else if (currentState[ind] == '[')
+      ind = processPiece(ind + 1, cur, step);
+    else if (currentState[ind] == ']')
+      return ind;
+    else {
+      QPointF newP(cur);
+      newP.setX(newP.x() + curDistance * qCos(qDegreesToRadians(curAngle)));
+      newP.setY(newP.y() + curDistance * qSin(qDegreesToRadians(curAngle)));
+      visual.push_back(QLineF(cur, newP));
+      cur = newP;
+      curDistance = 0;
+      curDistance += step;
+    }
+    ++ind;
+  }
+  visual.push_back(QLineF(cur, startingPoint));
+  return -1;
 }

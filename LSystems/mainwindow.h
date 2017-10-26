@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "paintcanvas.h"
 #include "structure.h"
 #include <QtWidgets>
 
@@ -14,6 +15,7 @@ class MainWindow : public QWidget {
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
+  void paint();
 
 private slots:
   void on_loadFile_clicked();

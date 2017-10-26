@@ -12,13 +12,19 @@ public:
   void addRule(const QChar &fr, const QString &to);
   void setAxiom(const QString &ax);
   void print();
-  QString levelUp(int lvl);
+  void levelUp(int lvl);
+  void buildVisualization(QPointF startingPoint, double step);
+  void initCurrentState();
+  QVector<QLineF> &getVisualization();
 
 private:
   QList<QChar> alphabet;
   double angle;
   QMap<QChar, QString> rules;
   QString axiom;
+  QString currentState;
+  QVector<QLineF> visual;
+  int processPiece(int ind, QPointF cur, double step);
 };
 
 #endif // STRUCTURE_H

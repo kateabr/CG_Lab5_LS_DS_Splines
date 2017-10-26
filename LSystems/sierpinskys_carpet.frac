@@ -1,0 +1,13 @@
+alphabet
+F
+G
+
+rules
+F | F-G+F+G-F
+G | GG
+
+axiom
+F-G-G
+
+angle
+120

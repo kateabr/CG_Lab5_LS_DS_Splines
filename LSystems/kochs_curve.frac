@@ -2,10 +2,10 @@ alphabet
 F
 
 rules
-F | F-F++F-F
+F | F+F−F−F+F
 
 axiom
-F++F++F
+F
 
 angle
-60
+90

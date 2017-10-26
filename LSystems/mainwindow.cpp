@@ -9,11 +9,30 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
-  connect(ui->levels, &QSlider::valueChanged,
-          [&](int lvl) { qDebug() << str.levelUp(lvl); });
+  connect(ui->levels, &QSlider::valueChanged, [&](int val) { paint(); });
+  connect(ui->startX,
+          static_cast<void (QDoubleSpinBox::*)(double)>(
+              &QDoubleSpinBox::valueChanged),
+          [&](double val) { paint(); });
+  connect(ui->startY,
+          static_cast<void (QDoubleSpinBox::*)(double)>(
+              &QDoubleSpinBox::valueChanged),
+          [&](double val) { paint(); });
+  connect(ui->step,
+          static_cast<void (QDoubleSpinBox::*)(double)>(
+              &QDoubleSpinBox::valueChanged),
+          [&](double val) { paint(); });
 }
 
 MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::paint() {
+  str.levelUp(ui->levels->value());
+  str.buildVisualization(QPointF(ui->startX->value(), ui->startY->value()),
+                         ui->step->value());
+  ui->frame->setLinesToDraw(str.getVisualization());
+  ui->frame->repaint();
+}
 
 void MainWindow::on_loadFile_clicked() {
   QString filename =
@@ -68,4 +87,7 @@ void MainWindow::on_loadFile_clicked() {
 
     inputFile.close();
   }
+  str.initCurrentState();
+
+  paint();
 }
