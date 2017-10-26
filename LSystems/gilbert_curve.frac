@@ -1,19 +1,18 @@
 alphabet
 F
+Y
 X
 
 rules
-X | F[-X][X]F[-X]+FX
-F | FF
+F | F
+X | -YF+XFX+FY-
+Y | +XF-YFY-FX+
 
 axiom
 X
 
 angle
-25
-
-drawable
-F
+90
 
 noncyclic
 

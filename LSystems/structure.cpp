@@ -6,9 +6,11 @@ Structure::Structure() {}
 
 void Structure::setAngle(double a) { angle = a; }
 
-void Structure::addToAlphabet(QChar ch) { alphabet.push_back(ch); }
+void Structure::addToAlphabet(QChar ch) { alphabet.insert(ch); }
 
-void Structure::addRule(const QChar &fr, const QString &to) { rules[fr] = to; }
+void Structure::addToDrawableSymbols(QChar ch) { drawables.insert(ch); }
+
+void Structure::addRule(QChar fr, const QString &to) { rules[fr] = to; }
 
 void Structure::setAxiom(const QString &ax) { axiom = ax; }
 
@@ -49,6 +51,24 @@ void Structure::buildVisualization(QPointF startingPoint, double step) {
 
 void Structure::initCurrentState() { currentState = axiom; }
 
+void Structure::setCyclic(bool c) { cyclic = c; }
+
+void Structure::checkDrawables() {
+  if (!drawables.size())
+    for (auto ch : alphabet)
+      drawables.insert(ch);
+}
+
+void Structure::clearStructure() {
+  alphabet.clear();
+  rules.clear();
+  axiom = "";
+  drawables.clear();
+  currentState = "";
+  visual.clear();
+  cyclic = true;
+}
+
 QVector<QLineF> &Structure::getVisualization() { return visual; }
 
 int Structure::processPiece(int ind, QPointF cur, double step) {
@@ -64,7 +84,7 @@ int Structure::processPiece(int ind, QPointF cur, double step) {
       ind = processPiece(ind + 1, cur, step);
     else if (currentState[ind] == ']')
       return ind;
-    else {
+    else if (drawables.contains(currentState[ind])) {
       QPointF newP(cur);
       newP.setX(newP.x() + curDistance * qCos(qDegreesToRadians(curAngle)));
       newP.setY(newP.y() + curDistance * qSin(qDegreesToRadians(curAngle)));
@@ -75,6 +95,7 @@ int Structure::processPiece(int ind, QPointF cur, double step) {
     }
     ++ind;
   }
-  visual.push_back(QLineF(cur, startingPoint));
-  return -1;
+  if (cyclic)
+    visual.push_back(QLineF(cur, startingPoint));
+  return 0;
 }

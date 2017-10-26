@@ -2,10 +2,13 @@ alphabet
 F
 
 rules
-F | F+F−F−F+F
+F | F+F-F-F+F
 
 axiom
 F
 
 angle
 90
+
+noncyclic
+

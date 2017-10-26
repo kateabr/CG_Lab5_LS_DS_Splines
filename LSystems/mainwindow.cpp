@@ -40,6 +40,7 @@ void MainWindow::on_loadFile_clicked() {
   if (filename.isEmpty())
     return;
   QRegExp rx("(\\ \\|\\ )");
+  str.clearStructure();
   QFile inputFile(filename);
   if (inputFile.open(QIODevice::ReadOnly)) {
     QTextStream in(&inputFile);
@@ -80,13 +81,23 @@ void MainWindow::on_loadFile_clicked() {
           return;
         }
         str.setAngle(angle);
+      } else if (line == "drawable") {
+        line = in.readLine();
+        if (line.size() != 1) {
+          QMessageBox::warning(this, "Error", "Invalid drawable symbol");
+          return;
+        }
+        str.addToDrawableSymbols(line[0]);
+      } else if (line == "noncyclic") {
+        str.setCyclic(false);
       }
-
       line = in.readLine();
     }
 
     inputFile.close();
   }
+  str.checkDrawables();
+
   str.initCurrentState();
 
   paint();
