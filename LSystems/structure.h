@@ -17,10 +17,11 @@ public:
   void levelUp(int lvl);
   void buildVisualization(QPointF startingPoint, double step);
   void initCurrentState();
-  void setCyclic(bool c);
+  void setCyclic(bool c = false);
   void checkDrawables();
   void clearStructure();
   QVector<QLineF> &getVisualization();
+  void setRandom(bool rand = true);
 
 private:
   QSet<QChar> alphabet;
@@ -32,6 +33,7 @@ private:
   QVector<QLineF> visual;
   bool cyclic = true;
   int processPiece(int ind, QPointF cur, double step);
+  bool random = false;
 };
 
 #endif // STRUCTURE_H

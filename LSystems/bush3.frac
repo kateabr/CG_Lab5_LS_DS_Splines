@@ -1,0 +1,16 @@
+alphabet
+F
+X
+
+rules
+F | FF
+X | F-[[X]+X]+F[+FX]-X
+
+axiom
+X
+
+angle
+22.5
+
+noncyclic
+

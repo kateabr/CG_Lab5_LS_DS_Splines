@@ -1,0 +1,18 @@
+alphabet
+F
+X
+
+rules
+F | FF
+X | F[@[@X]@X]
+
+axiom
+X
+
+angle
+45
+
+noncyclic
+
+random
+

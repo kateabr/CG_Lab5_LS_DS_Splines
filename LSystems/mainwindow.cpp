@@ -89,7 +89,9 @@ void MainWindow::on_loadFile_clicked() {
         }
         str.addToDrawableSymbols(line[0]);
       } else if (line == "noncyclic") {
-        str.setCyclic(false);
+        str.setCyclic();
+      } else if (line == "random") {
+        str.setRandom();
       }
       line = in.readLine();
     }

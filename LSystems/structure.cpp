@@ -71,7 +71,10 @@ void Structure::clearStructure() {
 
 QVector<QLineF> &Structure::getVisualization() { return visual; }
 
+void Structure::setRandom(bool rand) { random = rand; }
+
 int Structure::processPiece(int ind, QPointF cur, double step) {
+  qsrand(time(0));
   double curDistance = 0;
   double curAngle = 0;
   QPointF startingPoint(cur);
@@ -80,7 +83,11 @@ int Structure::processPiece(int ind, QPointF cur, double step) {
       curAngle += angle;
     else if (currentState[ind] == '-')
       curAngle -= angle;
-    else if (currentState[ind] == '[')
+    else if (currentState[ind] == '@') {
+      double randVal = qrand() % (int)angle;
+      double sign = qrand() % 2 ? -1 : 1;
+      curAngle = sign * randVal;
+    } else if (currentState[ind] == '[')
       ind = processPiece(ind + 1, cur, step);
     else if (currentState[ind] == ']')
       return ind;
