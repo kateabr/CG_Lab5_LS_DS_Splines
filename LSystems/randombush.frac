@@ -4,13 +4,16 @@ X
 
 rules
 F | FF
-X | F[@[@X]@X]
+X | F[[-X]+X]
 
 axiom
 X
 
 angle
 45
+
+drawable
+F
 
 noncyclic
 

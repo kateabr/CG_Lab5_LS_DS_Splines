@@ -80,14 +80,10 @@ int Structure::processPiece(int ind, QPointF cur, double step) {
   QPointF startingPoint(cur);
   while (ind < currentState.size()) {
     if (currentState[ind] == '+')
-      curAngle += angle;
+      curAngle += random ? qrand() % (int)angle : angle;
     else if (currentState[ind] == '-')
-      curAngle -= angle;
-    else if (currentState[ind] == '@') {
-      double randVal = qrand() % (int)angle;
-      double sign = qrand() % 2 ? -1 : 1;
-      curAngle = sign * randVal;
-    } else if (currentState[ind] == '[')
+      curAngle -= random ? qrand() % (int)angle : angle;
+    else if (currentState[ind] == '[')
       ind = processPiece(ind + 1, cur, step);
     else if (currentState[ind] == ']')
       return ind;
