@@ -83,7 +83,7 @@ int Structure::processPiece(int ind, QPointF cur, double step,
     else if (currentState[ind] == '-')
       curAngle -= random ? qrand() % (int)angle : angle;
     else if (currentState[ind] == '[')
-      ind = processPiece(ind + 1, cur, step, curAngle);
+      ind = processPiece(ind + 1, cur, step * 0.8, curAngle);
     else if (currentState[ind] == ']')
       return ind;
     else if (drawables.contains(currentState[ind])) {
