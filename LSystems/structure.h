@@ -32,7 +32,7 @@ private:
   QString currentState;
   QVector<QLineF> visual;
   bool cyclic = true;
-  int processPiece(int ind, QPointF cur, double step);
+  int processPiece(int ind, QPointF cur, double step, double curAngle = 0);
   bool random = false;
 };
 

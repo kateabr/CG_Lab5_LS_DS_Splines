@@ -73,10 +73,9 @@ QVector<QLineF> &Structure::getVisualization() { return visual; }
 
 void Structure::setRandom(bool rand) { random = rand; }
 
-int Structure::processPiece(int ind, QPointF cur, double step) {
-  qsrand(time(0));
+int Structure::processPiece(int ind, QPointF cur, double step,
+                            double curAngle) {
   double curDistance = 0;
-  double curAngle = 0;
   QPointF startingPoint(cur);
   while (ind < currentState.size()) {
     if (currentState[ind] == '+')
@@ -84,17 +83,17 @@ int Structure::processPiece(int ind, QPointF cur, double step) {
     else if (currentState[ind] == '-')
       curAngle -= random ? qrand() % (int)angle : angle;
     else if (currentState[ind] == '[')
-      ind = processPiece(ind + 1, cur, step);
+      ind = processPiece(ind + 1, cur, step, curAngle);
     else if (currentState[ind] == ']')
       return ind;
     else if (drawables.contains(currentState[ind])) {
+      curDistance += step;
       QPointF newP(cur);
       newP.setX(newP.x() + curDistance * qCos(qDegreesToRadians(curAngle)));
       newP.setY(newP.y() + curDistance * qSin(qDegreesToRadians(curAngle)));
       visual.push_back(QLineF(cur, newP));
       cur = newP;
       curDistance = 0;
-      curDistance += step;
     }
     ++ind;
   }

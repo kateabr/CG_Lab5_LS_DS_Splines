@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
           static_cast<void (QDoubleSpinBox::*)(double)>(
               &QDoubleSpinBox::valueChanged),
           [&](double val) { paint(); });
+  qsrand(time(0));
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -83,11 +84,14 @@ void MainWindow::on_loadFile_clicked() {
         str.setAngle(angle);
       } else if (line == "drawable") {
         line = in.readLine();
-        if (line.size() != 1) {
-          QMessageBox::warning(this, "Error", "Invalid drawable symbol");
-          return;
+        while (!line.isEmpty()) {
+          if (line.size() != 1) {
+            QMessageBox::warning(this, "Error", "Invalid drawable symbol");
+            return;
+          }
+          str.addToDrawableSymbols(line[0]);
+          line = in.readLine();
         }
-        str.addToDrawableSymbols(line[0]);
       } else if (line == "noncyclic") {
         str.setCyclic();
       } else if (line == "random") {
